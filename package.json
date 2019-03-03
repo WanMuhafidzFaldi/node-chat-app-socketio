@@ -1,0 +1,27 @@
+{
+  "name": "node-chat-app-socketio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev":"nodemon server/server.js"
+  },
+  "engines": {
+    "node" : "8.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/wanmuhafidzfaldi/node-chat-app-socketio.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/wanmuhafidzfaldi/node-chat-app-socketio/issues"
+  },
+  "homepage": "https://gitlab.com/wanmuhafidzfaldi/node-chat-app-socketio#README",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
