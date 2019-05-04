@@ -1,7 +1,16 @@
 const socket = io();
 socket.on('message', (message) => {
   console.log(message);
+  const html = Mustache.render(messageTemplate, {
+    message
+  });
+  $messages.insertAdjacentHTML('beforebegin', html);
 });
+
+const $messages = document.querySelector('#messages');
+
+
+const messageTemplate = document.querySelector('#message-template').innerHTML;
 
 document.querySelector('#message-form').addEventListener('submit', (e) => {
   e.preventDefault()
