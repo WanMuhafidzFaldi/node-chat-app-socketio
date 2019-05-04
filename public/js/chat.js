@@ -7,6 +7,15 @@ socket.on('message', (message) => {
   $messages.insertAdjacentHTML('beforebegin', html);
 });
 
+socket.on('locationMessage', (message) => {
+  console.log(message);
+  const html = Mustache.render(messageTemplate, {
+    locationMessage: 'My Current Location',
+    locationUrl: message
+  });
+  $messages.insertAdjacentHTML('beforebegin', html);
+});
+
 const $messages = document.querySelector('#messages');
 
 
