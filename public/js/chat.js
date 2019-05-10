@@ -1,32 +1,39 @@
 const socket = io();
-socket.on('message', (message) => {
-  console.log(message);
-  const html = Mustache.render(messageTemplate, {
-    message
-  });
-  $messages.insertAdjacentHTML('beforebegin', html);
-});
-
-socket.on('locationMessage', (message) => {
-  console.log(message);
-  const html = Mustache.render(messageTemplate, {
-    locationMessage: 'My Current Location',
-    locationUrl: message
-  });
-  $messages.insertAdjacentHTML('beforebegin', html);
-});
 
 const $messages = document.querySelector('#messages');
 
 
 const messageTemplate = document.querySelector('#message-template').innerHTML;
+const messageTemplateLocation = document.querySelector('#message-template-location').innerHTML;
+
+const {username , room } = Qs.parse(location.search, { ignoreQueryPrefix : true});
+socket.on('message', (message) => {
+  console.log(message);
+  const html = Mustache.render(messageTemplate, {
+    username: message.username,
+    message: message.text,
+    createdAt: moment(message.createdAt).format('D MMMM YYYY hh:mm:ss')
+  });
+  $messages.insertAdjacentHTML('beforeend', html);
+});
+
+socket.on('locationMessage', (message) => {
+  console.log(message);
+  const html = Mustache.render(messageTemplateLocation, {
+    username: message.username,
+    locationMessage: 'My Current Location',
+    locationUrl: message.text,
+    createdAt: moment(message.createdAt).format('D MMMM YYYY hh:mm:ss')
+  });
+  $messages.insertAdjacentHTML('beforeend', html);
+});
 
 document.querySelector('#message-form').addEventListener('submit', (e) => {
   e.preventDefault()
 
   const message = e.target.elements.message.value;
 
-  socket.emit('sendMessage', message, (result) => {
+  socket.emit('sendMessage', {username, message}, (result) => {
     if(result.err){
       return console.log(result.message);
     }
@@ -53,3 +60,5 @@ document.querySelector('#send-location').addEventListener('click', () => {
   });
 });
 
+
+socket.emit('join', {username, room});
