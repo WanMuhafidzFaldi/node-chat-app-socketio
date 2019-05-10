@@ -5,8 +5,8 @@ const users = [];
 const addUser = ({ id, username, room}) => {
   username = username.trim().toLowerCase(); 
   room = room.trim().toLowerCase();
-
-  if(!username || room) {
+  
+  if(!username || !room) {
     return {
       error : 'Username and Room are required!'
     }
